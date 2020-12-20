@@ -15,11 +15,11 @@ public class LeapYear {
     }
 
     public static boolean isLeapYear(int year) {
-        if (year % 400 == 0 or year % 4 == 0) {
-            return True
+        if (year % 400 == 0 || year % 4 == 0) {
+            return true;
         }
         else {
-            return False
+            return false;
         }
     }
 
