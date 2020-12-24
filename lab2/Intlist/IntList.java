@@ -109,6 +109,10 @@ public class IntList {
         IntList L = A;
         IntList comb = new IntList(A.first, null);
         IntList combL = comb;
+
+        if (A == null) {
+            return null;
+        }
         /**
          * Copy A to comb.
          */
