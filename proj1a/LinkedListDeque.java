@@ -35,7 +35,9 @@ public class LinkedListDeque<Type> {
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(Type item) {
-        sentinel.next = new LinkList(item, sentinel, sentinel.next);
+        LinkList first = new LinkList(item, sentinel, sentinel.next);
+        sentinel.next.pre = first;
+        sentinel.next = first;
         if (last == sentinel) {
             last = sentinel.next;
             sentinel.pre = last;
