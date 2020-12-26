@@ -38,6 +38,7 @@ public class LinkedListDeque<Type> {
         sentinel.next = new LinkList(item, sentinel, sentinel.next);
         if (last == sentinel) {
             last = sentinel.next;
+            sentinel.pre = last;
         }
         size ++;
     }
@@ -45,6 +46,7 @@ public class LinkedListDeque<Type> {
     /** Adds an item of type T to the back of the deque. */
     public void addLast(Type item) {
         last = new LinkList(item, last, null);
+        last.pre.next = last;
         sentinel.pre = last;
         size ++;
     }
