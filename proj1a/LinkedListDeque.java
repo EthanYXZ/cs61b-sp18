@@ -1,13 +1,11 @@
-import java.util.LinkedList;
-
-public class LinkedListDeque<Type> {
+public class LinkedListDeque<T> {
     /** The basement LinkList class. */
     private class LinkList {
         private LinkList pre;
-        private Type item;
+        private T item;
         private LinkList next;
 
-        private LinkList(Type i, LinkList p, LinkList n) {
+        private LinkList(T i, LinkList p, LinkList n) {
             pre = p;
             item = i;
             next = n;
@@ -26,15 +24,17 @@ public class LinkedListDeque<Type> {
         size = 0;
     }
 
-    public LinkedListDeque(Type i) {
+    /**
+    public LinkedListDeque(T i) {
         last = new LinkList(i, sentinel, sentinel);
         sentinel.pre = last;
         sentinel.next = last;
         size = 1;
     }
+     */
 
-    /** Adds an item of type T to the front of the deque. */
-    public void addFirst(Type item) {
+    /** Adds an item of T T to the front of the deque. */
+    public void addFirst(T item) {
         LinkList first = new LinkList(item, sentinel, sentinel.next);
         sentinel.next.pre = first;
         sentinel.next = first;
@@ -45,8 +45,8 @@ public class LinkedListDeque<Type> {
         size += 1;
     }
 
-    /** Adds an item of type T to the back of the deque. */
-    public void addLast(Type item) {
+    /** Adds an item of T T to the back of the deque. */
+    public void addLast(T item) {
         last = new LinkList(item, last, sentinel);
         last.pre.next = last;
         sentinel.pre = last;
@@ -66,7 +66,9 @@ public class LinkedListDeque<Type> {
         return size;
     }
 
-    /** Prints the items in the deque from first to last, separated by a space. */
+    /** Prints the items in the deque from first to last,
+     *  separated by a space.
+     */
     public void printDeque() {
         LinkList p = sentinel.next;
         while (p.next != null) {
@@ -80,11 +82,11 @@ public class LinkedListDeque<Type> {
      * Removes and returns the item at the front of the deque.
      * If no such item exists, returns null.
      */
-    public Type removeFirst() {
+    public T removeFirst() {
         if (sentinel.next == sentinel) {
             return null;
         }
-        Type i = sentinel.next.item;
+        T i = sentinel.next.item;
         sentinel.next = sentinel.next.next;
         sentinel.next.pre = sentinel;
         size -= 1;
@@ -98,11 +100,11 @@ public class LinkedListDeque<Type> {
      * Removes and returns the item at the back of the deque.
      * If no such item exists, returns null.
      */
-    public Type removeLast() {
+    public T removeLast() {
         if (last == sentinel) {
             return null;
         }
-        Type i = last.item;
+        T i = last.item;
         last = last.pre;
         last.next = sentinel;
         sentinel.pre = last;
@@ -111,15 +113,17 @@ public class LinkedListDeque<Type> {
     }
 
     /**
-     * Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
-     * If no such item exists, returns null. Must not alter the deque!
+     * Gets the item at the given index,
+     * where 0 is the front, 1 is the next item, and so forth.
+     * If no such item exists, returns null.
+     * Must not alter the deque!
      */
-    public Type get(int index) {
+    public T get(int index) {
         if (sentinel.next == sentinel) {
             return null;
         }
         LinkList p = sentinel.next;
-        while (index != 0){
+        while (index != 0) {
             p = p.next;
             index -= 1;
         }
@@ -127,8 +131,8 @@ public class LinkedListDeque<Type> {
     }
 
     /** Gets the item at the given index by recursion. */
-    public Type getRecursive(int index) {
-        LinkedListDeque<Type> p = this;
+    public T getRecursive(int index) {
+        LinkedListDeque<T> p = this;
         if (sentinel.next == sentinel) {
             return null;
         }
