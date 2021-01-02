@@ -103,6 +103,26 @@ public class ArrayDequeTest {
 
         passed = checkSize(3,ad1.size()) && passed;
 
+
+        ArrayDeque<Integer> ad2 = new ArrayDeque<>();
+        ad2.addLast(0);
+        ad2.addFirst(1);
+        ad2.addFirst(2);
+        ad2.addFirst(3);
+        ad2.removeLast();
+        ad2.removeFirst();
+        ad2.addFirst(7);
+        ad2.addFirst(8);
+        ad2.removeLast();
+        ad2.addLast(10);
+        ad2.addFirst(11);
+        ad2.addFirst(12);
+        ad2.removeLast();
+        ad2.removeFirst();
+        ad2.removeFirst();
+        ad2.get(2);
+        passed = getTest(2, ad2.get(2));
+
         printTestStatus(passed);
     }
 }

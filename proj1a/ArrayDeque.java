@@ -255,7 +255,7 @@ public class ArrayDeque<T> {
         switch (c) {
             case 1:
             case 5:
-                position = nextfirst + 1;
+                position = nextfirst + 1 + index;
                 break;
             case 2:
             case 6:
