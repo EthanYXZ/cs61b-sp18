@@ -9,14 +9,17 @@ public class ArrayDeque<T> {
         if (nextfirst < nextlast && size != items.length) {
             c = 1;
         }
-        else if (items.length - nextfirst - 1 == 0) {
+        else if (items.length - nextfirst - 1 == 0 && size != items.length) {
             c = 2;
         }
-        else if (nextlast == 0) {
+        else if (nextlast == 0 && size != items.length) {
             c = 3;
         }
         else if (nextfirst < nextlast && size == items.length) {
             c = 5;
+        }
+        else if (nextfirst == items.length - 1 && nextlast == 0 && size == items.length) {
+            c = 6;
         }
         else{
             c = 4;
@@ -39,7 +42,7 @@ public class ArrayDeque<T> {
     private void upperResize(){
         T[] i = (T []) new Object[items.length * 2];
         int c = caseChecker();
-        if (c != 4 && c != 5) {
+        if (c == 6) {
             System.arraycopy(items, 0, i, 0, items.length);
         }
         else {
@@ -149,6 +152,10 @@ public class ArrayDeque<T> {
                 for (p = 0; p < nextlast; p ++) {
                     System.out.print(items[p] + " ");
                 }
+            case 6:
+                for (p = 0; p < items.length; p ++) {
+                    System.out.print(items[p] + " ");
+                }
         }
         System.out.println();
     }
@@ -167,6 +174,7 @@ public class ArrayDeque<T> {
 
         switch(c) {
             case 2:
+            case 6:
                 nextfirst = 0;
                 returnitem = items[0];
                 items[0] = null;
@@ -206,6 +214,7 @@ public class ArrayDeque<T> {
 
         switch(c) {
             case 3:
+            case 6:
                 nextlast = items.length - 1;
                 returnitem = items[nextlast];
                 items[nextlast] = null;
@@ -219,7 +228,7 @@ public class ArrayDeque<T> {
         size --;
         double usageratio = size / items.length;
 
-        if (usageratio < 0.25) {
+        if (usageratio < 0.25 && items.length > 8) {
             lowerResize();
         }
 
@@ -233,6 +242,38 @@ public class ArrayDeque<T> {
      * Must not alter the deque!
      */
     public T get(int index) {
-        return items[index];
+        if (index >= size) {
+            return null;
+        }
+        int position = findPosition(index);
+        return items[position];
+    }
+
+    private int findPosition(int index) {
+        int c = caseChecker();
+        int position = 0;
+        switch (c) {
+            case 1:
+            case 5:
+                position = nextfirst + 1;
+                break;
+            case 2:
+            case 6:
+                position = index;
+                break;
+            case 3:
+                position = nextfirst + 1 + index;
+                break;
+            case 4:
+                int f = items.length - nextfirst - 1;
+                int l = nextlast;
+                if (index + 1 <= f) {
+                    position = nextfirst + 1 + index;
+                }
+                else{
+                    position = index - f;
+                }
+        }
+        return position;
     }
 }
