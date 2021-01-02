@@ -254,7 +254,6 @@ public class ArrayDeque<T> {
         int position = 0;
         switch (c) {
             case 1:
-            case 5:
                 position = nextfirst + 1 + index;
                 break;
             case 2:
@@ -265,6 +264,7 @@ public class ArrayDeque<T> {
                 position = nextfirst + 1 + index;
                 break;
             case 4:
+            case 5:
                 int f = items.length - nextfirst - 1;
                 int l = nextlast;
                 if (index + 1 <= f) {
