@@ -106,22 +106,26 @@ public class ArrayDequeTest {
 
         ArrayDeque<Integer> ad2 = new ArrayDeque<>();
         ad2.addLast(0);
-        ad2.addFirst(1);
-        ad2.addFirst(2);
+        ad2.addLast(1);
         ad2.addFirst(3);
-        ad2.removeLast();
+        ad2.addLast(4);
+        ad2.addLast(6);
         ad2.removeFirst();
-        ad2.addFirst(7);
         ad2.addFirst(8);
-        ad2.removeLast();
-        ad2.addLast(10);
+        ad2.removeFirst();
+        ad2.addFirst(10);
         ad2.addFirst(11);
-        ad2.addFirst(12);
         ad2.removeLast();
-        ad2.removeFirst();
-        ad2.removeFirst();
-        ad2.get(2);
-        passed = getTest(2, ad2.get(2));
+        ad2.addFirst(13);
+        ad2.removeLast();
+        ad2.addFirst(15);
+        ad2.addFirst(16);
+        ad2.addFirst(17);
+        ad2.get(5);
+        passed = getTest(10, ad2.get(5)) && passed;
+        ad2.addFirst(19);
+        ad2.addFirst(20);
+        ad2.removeLast();
 
         printTestStatus(passed);
     }

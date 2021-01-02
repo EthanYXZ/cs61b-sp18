@@ -226,7 +226,7 @@ public class ArrayDeque<T> {
         }
 
         size --;
-        double usageratio = size / items.length;
+        double usageratio = Double.valueOf(size) / items.length;
 
         if (usageratio < 0.25 && items.length > 8) {
             lowerResize();
