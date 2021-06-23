@@ -1,56 +1,44 @@
 public class LinkedListDeque<T> {
     /** The basement LinkList class. */
     private class LinkList {
-        private LinkList pre;
-        private T item;
-        private LinkList next;
+        public LinkList pre;
+        public T item;
+        public LinkList next;
 
-        private LinkList(T i, LinkList p, LinkList n) {
+        public LinkList(T i, LinkList p, LinkList n) {
             pre = p;
             item = i;
             next = n;
         }
     }
 
-    private LinkList sentinel = new LinkList(null, null, null);
-    private LinkList last;
+    private LinkList sentinel;
     private int size;
 
     /** Creates an empty linked list deque. */
     public LinkedListDeque() {
-        last = sentinel;
-        sentinel.pre = last;
+        sentinel = new LinkList(null, null, null);
+        sentinel.pre = sentinel;
         sentinel.next = sentinel;
         size = 0;
     }
 
-    /**
-    public LinkedListDeque(T i) {
-        last = new LinkList(i, sentinel, sentinel);
-        sentinel.pre = last;
-        sentinel.next = last;
-        size = 1;
-    }
-     */
-
     /** Adds an item of T T to the front of the deque. */
     public void addFirst(T item) {
+        size++;
         LinkList first = new LinkList(item, sentinel, sentinel.next);
         sentinel.next.pre = first;
         sentinel.next = first;
-        if (last == sentinel) {
-            last = sentinel.next;
-            sentinel.pre = last;
+        if (sentinel.pre == sentinel) {
+            sentinel.pre = sentinel.next;
         }
-        size += 1;
     }
 
     /** Adds an item of T T to the back of the deque. */
     public void addLast(T item) {
-        last = new LinkList(item, last, sentinel);
-        last.pre.next = last;
-        sentinel.pre = last;
-        size += 1;
+        size++;
+        sentinel.pre = new LinkList(item, sentinel.pre, sentinel);
+        sentinel.pre.pre.next = sentinel.pre;
     }
 
     /** Returns true if deque is empty, false otherwise. */
@@ -86,13 +74,10 @@ public class LinkedListDeque<T> {
         if (sentinel.next == sentinel) {
             return null;
         }
+        size--;
         T i = sentinel.next.item;
         sentinel.next = sentinel.next.next;
         sentinel.next.pre = sentinel;
-        size -= 1;
-        if (size == 0) {
-            last = sentinel;
-        }
         return i;
     }
 
@@ -101,14 +86,13 @@ public class LinkedListDeque<T> {
      * If no such item exists, returns null.
      */
     public T removeLast() {
-        if (last == sentinel) {
+        if (sentinel.pre == sentinel) {
             return null;
         }
-        T i = last.item;
-        last = last.pre;
-        last.next = sentinel;
-        sentinel.pre = last;
-        size -= 1;
+        size--;
+        T i = sentinel.pre.item;
+        sentinel.pre = sentinel.pre.pre;
+        sentinel.pre.next = sentinel;
         return i;
     }
 
@@ -125,21 +109,25 @@ public class LinkedListDeque<T> {
         LinkList p = sentinel.next;
         while (index != 0) {
             p = p.next;
-            index -= 1;
+            index--;
         }
         return p.item;
     }
-
     /** Gets the item at the given index by recursion. */
     public T getRecursive(int index) {
-        LinkedListDeque<T> p = this;
         if (sentinel.next == sentinel) {
             return null;
         }
+        LinkList p = sentinel.next;
+        return getHelper(index, p);
+    }
+
+    private T getHelper(int index, LinkList p) {
         if (index == 0) {
-            return sentinel.next.item;
+            return p.item;
         }
-        p.sentinel.next = p.sentinel.next.next;
-        return p.get(index - 1);
+        index--;
+        p = p.next;
+        return getHelper(index, p);
     }
 }
