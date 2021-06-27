@@ -123,7 +123,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     public T peek() {
         // TODO: Return the first item. None of your instance variables should change.
         if (isEmpty()) {
-            return null;
+            throw new RuntimeException("Empty!");
         }
         return rb[first];
     }
